@@ -1,0 +1,70 @@
+{
+  "User": {
+    "collection": "users",
+    "fields": {
+      "_id": "ObjectId",
+      "name": "String (Required)",
+      "email": "String (Required, Unique)",
+      "passwordHash": "String (Required)",
+      "role": "String (Enum: ['doctor', 'admin'], Required)",
+      "phone": "String",
+      "profilePhoto": "String",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  },
+  "Doctor": {
+    "collection": "doctors",
+    "fields": {
+      "_id": "ObjectId",
+      "userId": "ObjectId (Ref: 'User', Required, Unique)",
+      "specialization": "String (Required)",
+      "bio": "String",
+      "experience": "Number",
+      "status": "String (Enum: ['active', 'inactive'], Default: 'active')",
+      "__v": "Number"
+    }
+  },
+  "Patient": {
+    "collection": "patients",
+    "fields": {
+      "_id": "ObjectId",
+      "name": "String (Required)",
+      "age": "Number",
+      "gender": "String (Enum: ['Male', 'Female', 'Other'])",
+      "email": "String",
+      "phone": "String (Required)",
+      "medicalHistory": "String",
+      "createdBy": "ObjectId (Ref: 'User')",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  },
+  "Timeslot": {
+    "collection": "timeslots",
+    "fields": {
+      "_id": "ObjectId",
+      "doctorId": "ObjectId (Ref: 'Doctor', Required)",
+      "startTime": "String (Required, format HH:mm)",
+      "endTime": "String (Required, format HH:mm)",
+      "daysOfWeek": "Array of Numbers (0-6)",
+      "isAvailable": "Boolean (Default: true)",
+      "__v": "Number"
+    }
+  },
+  "Appointment": {
+    "collection": "appointments",
+    "fields": {
+      "_id": "ObjectId",
+      "doctorId": "ObjectId (Ref: 'Doctor', Required)",
+      "patientId": "ObjectId (Ref: 'Patient', Required)",
+      "timeslotId": "ObjectId (Ref: 'Timeslot', Required)",
+      "date": "Date (Required)",
+      "status": "String (Enum: ['pending', 'approved', 'rejected'], Default: 'pending')",
+      "notes": "String",
+      "createdBy": "ObjectId (Ref: 'User')",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  }
+}
